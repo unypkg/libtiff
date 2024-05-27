@@ -77,6 +77,8 @@ get_include_paths
 
 unset LD_RUN_PATH
 
+./autogen.sh
+
 mkdir -p libtiff-build
 cd libtiff-build || exit
 
