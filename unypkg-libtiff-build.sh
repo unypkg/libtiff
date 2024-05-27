@@ -83,7 +83,7 @@ mkdir -p libtiff-build
 cd libtiff-build || exit
 
 cmake -DCMAKE_INSTALL_DOCDIR=/uny/pkg/"$pkgname"/"$pkgver"/share/doc/libtiff \
-    -DCMAKE_INSTALL_DEFAULT_LIBDIR=lib \
+    -DCMAKE_INSTALL_LIBDIR=/uny/pkg/"$pkgname"/"$pkgver"/lib \
     -DCMAKE_INSTALL_PREFIX=/uny/pkg/"$pkgname"/"$pkgver" -G Ninja ..
 
 ninja
