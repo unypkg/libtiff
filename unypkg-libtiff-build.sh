@@ -11,7 +11,7 @@ set -vx
 wget -qO- uny.nu/pkg | bash -s buildsys
 
 ### Installing build dependencies
-#unyp install python expat openssl
+unyp install cmake ninja libjpeg-turbo
 
 #pip3_bin=(/uny/pkg/python/*/bin/pip3)
 #"${pip3_bin[0]}" install --upgrade pip
@@ -35,7 +35,7 @@ mkdir -pv /uny/sources
 cd /uny/sources || exit
 
 pkgname="libtiff"
-pkggit="https://github.com/libtiff/libtiff.git refs/tags/*"
+pkggit="https://gitlab.com/libtiff/libtiff.git refs/tags/*"
 gitdepth="--depth=1"
 
 ### Get version info from git remote
@@ -77,12 +77,14 @@ get_include_paths
 
 unset LD_RUN_PATH
 
-./configure \
-    --prefix=/uny/pkg/"$pkgname"/"$pkgver"
+mkdir -p libtiff-build
+cd libtiff-build || exit
 
-make -j"$(nproc)"
-make -j"$(nproc)" check 
-make -j"$(nproc)" install
+cmake -DCMAKE_INSTALL_DOCDIR=/uny/pkg/"$pkgname"/"$pkgver"/share/doc/libtiff \
+    -DCMAKE_INSTALL_PREFIX=/uny/pkg/"$pkgname"/"$pkgver" -G Ninja ..
+
+ninja
+ninja install
 
 ####################################################
 ### End of individual build script
